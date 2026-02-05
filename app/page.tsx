@@ -3,7 +3,7 @@ import OfficeCarousel from '@/components/OfficeCarousel';
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#0B0B0B] overflow-hidden flex flex-col">
+    <div className="relative h-screen sm:h-screen w-full bg-[#0B0B0B] overflow-hidden flex flex-col supports-[height:100dvh]:h-[100dvh]">
       <Header />
       <OfficeCarousel />
     </div>

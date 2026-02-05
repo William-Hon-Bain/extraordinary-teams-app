@@ -71,23 +71,22 @@ export default function OfficeCarousel() {
   };
 
   return (
-    <>
-      {/* Carousel Container */}
+    <div className="h-[85vh] w-full flex flex-col items-center justify-between pb-6 box-border">
+      {/* Carousel Area - Takes available space */}
       <div
-        className="relative flex items-center justify-center"
+        className="relative w-full flex-1 flex items-center justify-center min-h-0"
         style={{
-          height: '550px',
           perspective: '1600px',
           perspectiveOrigin: 'center center'
         }}
       >
         <div
-          className="relative"
+          className="relative scale-[0.35] xs:scale-[0.4] sm:scale-[0.55] md:scale-[0.7] lg:scale-[0.85] xl:scale-100 transition-transform duration-300 origin-center"
           style={{
             width: '100%',
             maxWidth: '1200px',
             height: '600px',
-            transformStyle: 'preserve-3d'
+            transformStyle: 'preserve-3d',
           }}
         >
           {offices.map((office, index) => {
@@ -110,16 +109,22 @@ export default function OfficeCarousel() {
         </div>
       </div>
 
-      {/* Navigation Arrows */}
-      <div className="flex justify-center gap-4 mt-6 z-[100]">
-        {activeIndex > 0 && (
+      {/* Controls Container */}
+      <div className="flex flex-col items-center gap-6 z-[100] flex-shrink-0 w-full mb-2">
+        {/* Navigation Arrows */}
+        <div className="flex justify-center gap-4">
           <button
             onClick={handlePrev}
-            className="w-14 h-14 rounded-full bg-[#1a1a1a] border-2 border-gray-800 flex items-center justify-center hover:border-red-600/50 hover:shadow-[0_0_25px_rgba(220,38,38,0.3)] hover:scale-110 transition-all duration-300 group"
+            disabled={activeIndex === 0}
+            className={`
+              w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#1a1a1a] border-2 border-gray-800 flex items-center justify-center 
+              transition-all duration-300 group
+              ${activeIndex === 0 ? 'opacity-50 cursor-not-allowed border-gray-900' : 'hover:border-red-600/50 hover:shadow-[0_0_25px_rgba(220,38,38,0.3)] hover:scale-110'}
+            `}
             aria-label="Previous office"
           >
             <svg
-              className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors"
+              className="w-4 h-4 md:w-6 md:h-6 text-gray-400 group-hover:text-white transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -127,16 +132,19 @@ export default function OfficeCarousel() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
-        )}
 
-        {activeIndex < offices.length - 1 && (
           <button
             onClick={handleNext}
-            className="w-14 h-14 rounded-full bg-[#1a1a1a] border-2 border-gray-800 flex items-center justify-center hover:border-red-600/50 hover:shadow-[0_0_25px_rgba(220,38,38,0.3)] hover:scale-110 transition-all duration-300 group"
+            disabled={activeIndex === offices.length - 1}
+            className={`
+              w-10 h-10 md:w-14 md:h-14 rounded-full bg-[#1a1a1a] border-2 border-gray-800 flex items-center justify-center 
+              transition-all duration-300 group
+              ${activeIndex === offices.length - 1 ? 'opacity-50 cursor-not-allowed border-gray-900' : 'hover:border-red-600/50 hover:shadow-[0_0_25px_rgba(220,38,38,0.3)] hover:scale-110'}
+            `}
             aria-label="Next office"
           >
             <svg
-              className="w-6 h-6 text-gray-400 group-hover:text-white transition-colors"
+              className="w-4 h-4 md:w-6 md:h-6 text-gray-400 group-hover:text-white transition-colors"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -144,26 +152,26 @@ export default function OfficeCarousel() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
-        )}
-      </div>
+        </div>
 
-      {/* Office Indicator Dots */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-3 z-[100]">
-        {offices.map((office, index) => (
-          <button
-            key={office.id}
-            onClick={() => setActiveIndex(index)}
-            className={`
-              w-2.5 h-2.5 rounded-full transition-all duration-300
-              ${index === activeIndex
-                ? 'bg-red-600 w-10 shadow-[0_0_12px_rgba(220,38,38,0.6)]'
-                : 'bg-gray-600 hover:bg-gray-500'
-              }
-            `}
-            aria-label={`Go to ${office.name}`}
-          />
-        ))}
+        {/* Office Indicator Dots */}
+        <div className="flex justify-center gap-3 w-full">
+          {offices.map((office, index) => (
+            <button
+              key={office.id}
+              onClick={() => setActiveIndex(index)}
+              className={`
+                w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all duration-300
+                ${index === activeIndex
+                  ? 'bg-red-600 w-8 md:w-10 shadow-[0_0_12px_rgba(220,38,38,0.6)]'
+                  : 'bg-gray-600 hover:bg-gray-500'
+                }
+              `}
+              aria-label={`Go to ${office.name}`}
+            />
+          ))}
+        </div>
       </div>
-    </>
+    </div>
   );
 }
